@@ -5,6 +5,29 @@
     <title>TimedFlashCards</title>
   </head>
   <body>
-    <p>TimedFlashCards</p>
-  </body>
+    <div class="container mt-5">
+      <div id="start-menu">
+        <h1>Click to Start Time Flash Cards!</h1>
+        <button class="btn btn-success mt-3" id="start">Start Game</button>
+      </div>
+      <div id="game">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+          <div class="card-header">Question <span id="question-number"></span></div>
+          <div class="card-body">
+            <p class="card-text"><span id="question"></span><span id="answer"><span id="check"></span></p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form id="user-answer">
+          <label for="user-input">Enter Answer: </label>
+          <input id="user-input" type="text" name="user-input">
+          <button type="submit" class="btn btn-warning">Submit Answer</button>
+        </form>
+        <div id="point-field">
+          <h3>Your Point: <span id="point"></span></h3>
+        </div>
+      </div>
+    </div> 
+   </body>
 </html>

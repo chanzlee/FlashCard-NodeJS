@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export class FlashcardDeque {
   constructor(questions, interval, user) {
     //questions is an array of Flashcard objects
@@ -17,35 +19,53 @@ export class FlashcardDeque {
 
   checkAnswer(userAnswer) {
     this.getFlashcard().setUserAnswer(userAnswer);
-    if (this.getFlashcard().getAnswer() === userAnswer) {
+    if (this.getFlashcard().getAnswer() === this.getFlashcard().getUserAnswer()) {
       this.user.increasePoint(this.getFlashcard().getPoint()); 
+      this.update();
     } 
     else {
       this.user.decreasePoint(this.getFlashcard().getPoint());
+      this.update();
     }
   }
 
   startFlashcards() {
+    let currentTimeMS = Date.now();
     this.questionNumber = 0;
     setTimeout(function() {
-        return startInteval;
+      return startInteval;
     }, this.interval);
     let startInteval = setInterval(() => {
+      let timeGap = Date.now() - currentTimeMS;
+      console.log(timeGap);
       if (this.questionNumber === this.questions.length) {
-        if (this.questions[this.questionNumber].getUserAnswer() === "") {
-          this.user.decreasePoint(this.getFlashcard().getPoint());
-        }
+        // if (this.questions[this.questionNumber].getUserAnswer() === "") {
+        //   this.user.decreasePoint(this.getFlashcard().getPoint());
+        // }
         //if current card is the last one
         this.status = false;
         clearInterval();    
       }
       else {
         if (this.questions[this.questionNumber].getUserAnswer() === "") {
+          console.log(this.questions[this.questionNumber]);
+          console.log("user answer empty");
+          debugger;
           this.user.decreasePoint(this.getFlashcard().getPoint());
+          this.update();
         }
+        debugger;
         this.questionNumber++;
       }
+      currentTimeMS = Date.now();
     }, this.interval);
+  }
+
+  update () {
+    $("#question").text(this.getFlashcard().getQuestion());
+    $("#question-number").text(this.questionNumber+1);
+    $("#answer").text(this.getFlashcard().getAnswer());
+    $("#point").text(this.user.getPoint());
   }
 }
 
@@ -86,6 +106,7 @@ export class User {
     
   increasePoint(point) {
     this.point += point;
+
   }
     
   decreasePoint(point) {
@@ -96,3 +117,4 @@ export class User {
     return this.point;
   }
 }
+
