@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/flashcard.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">src/</a> flashcard.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/1</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">!function(n){var t={};function e(s){<span class="missing-if-branch" title="if path not taken" >I</span>if(t[s])<span class="cstat-no" title="statement not covered" >return t[s].exports;v</span>ar r=t[s]={i:s,l:!1,exports:{}};return n[s].call(r.exports,r,r.exports,e),r.l=!0,r.exports}e.m=n,e.c=t,e.d=<span class="fstat-no" title="function not covered" >function(n,t,s){<span class="cstat-no" title="statement not covered" ></span>e.o(n,t)||Object.defineProperty(n,t,{configurable:!1,enumerable:!0,get:s})}</span>,e.r=<span class="fstat-no" title="function not covered" >function(n){<span class="cstat-no" title="statement not covered" ></span>Object.defineProperty(n,"__esModule",{value:!0})}</span>,e.n=<span class="fstat-no" title="function not covered" >function(n){<span class="cstat-no" title="statement not covered" ></span>var t=n&amp;&amp;n.__esModule?<span class="fstat-no" title="function not covered" >function(){<span class="cstat-no" title="statement not covered" ></span>return n.default}</span>:<span class="fstat-no" title="function not covered" >function(){<span class="cstat-no" title="statement not covered" ></span>return n}</span>;<span class="cstat-no" title="statement not covered" >r</span>eturn e.d(t,"a",t),t}</span>,e.o=<span class="fstat-no" title="function not covered" >function(n,t){<span class="cstat-no" title="statement not covered" ></span>return Object.prototype.hasOwnProperty.call(n,t)}</span>,e.p="/var/folders/zz/zyxvpxvq6csfxvn_n00000s4000069/T/_karma_webpack_/",e(e.s=12)}({12:function(module,exports,__webpack_require__){"use strict";eval('\n\nObject.defineProperty(exports, "__esModule", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }\n\nvar FlashcardDeque = exports.FlashcardDeque = function () {\n  function FlashcardDeque(questions, interval, user) {\n    _classCallCheck(this, FlashcardDeque);\n\n    //questions is an array of Flashcard objects\n    this.questions = questions;\n    this.interval = interval;\n    this.questionNumber = 0;\n    this.status = true;\n    this.user = user;\n  }\n\n  _createClass(FlashcardDeque, [{\n    key: "getFlashcard",\n    value: function getFlashcard() {\n      if (this.status === true) return this.questions[this.questionNumber];else return new Error("Game over");\n    }\n  }, {\n    key: "checkAnswer",\n    value: function checkAnswer(userAnswer) {\n      this.getFlashcard().setUserAnswer(userAnswer);\n      if (this.getFlashcard().getAnswer() === userAnswer) {\n        this.user.increasePoint(this.getFlashcard().getPoint());\n      } else {\n        this.user.decreasePoint(this.getFlashcard().getPoint());\n      }\n    }\n  }, {\n    key: "startFlashcards",\n    value: function startFlashcards() {\n      var _this = this;\n\n      this.questionNumber = 0;\n      setTimeout(function () {\n        return startInteval;\n      }, this.interval);\n      var startInteval = setInterval(function () {\n        if (_this.questionNumber === _this.questions.length) {\n          if (_this.questions[_this.questionNumber].getUserAnswer() === "") {\n            _this.user.decreasePoint(_this.getFlashcard().getPoint());\n          }\n          //if current card is the last one\n          _this.status = false;\n          clearInterval();\n        } else {\n          if (_this.questions[_this.questionNumber].getUserAnswer() === "") {\n            _this.user.decreasePoint(_this.getFlashcard().getPoint());\n          }\n          _this.questionNumber++;\n        }\n      }, this.interval);\n    }\n  }]);\n\n  return FlashcardDeque;\n}();\n\nvar Flashcard = exports.Flashcard = function () {\n  function Flashcard(question, answer, point) {\n    _classCallCheck(this, Flashcard);\n\n    this.question = question;\n    this.userAnswer = "";\n    this.answer = answer;\n    this.point = point;\n  }\n\n  _createClass(Flashcard, [{\n    key: "getQuestion",\n    value: function getQuestion() {\n      return this.question;\n    }\n  }, {\n    key: "getUserAnswer",\n    value: function getUserAnswer() {\n      return this.userAnswer;\n    }\n  }, {\n    key: "getAnswer",\n    value: function getAnswer() {\n      return this.answer;\n    }\n  }, {\n    key: "getPoint",\n    value: function getPoint() {\n      return this.point;\n    }\n  }, {\n    key: "setUserAnswer",\n    value: function setUserAnswer(userAnswer) {\n      this.userAnswer = userAnswer;\n    }\n  }]);\n\n  return Flashcard;\n}();\n\nvar User = exports.User = function () {\n  function User(name) {\n    _classCallCheck(this, User);\n\n    this.name = name;\n    this.point = 0;\n  }\n\n  _createClass(User, [{\n    key: "increasePoint",\n    value: function increasePoint(point) {\n      this.point += point;\n    }\n  }, {\n    key: "decreasePoint",\n    value: function decreasePoint(point) {\n      this.point -= point;\n    }\n  }, {\n    key: "getPoint",\n    value: function getPoint() {\n      return this.point;\n    }\n  }]);\n\n  return User;\n}();//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvZmxhc2hjYXJkLmpzPzllYjkiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztJQUNFOzBCQUFZLFdBQVcsVUFBVTtBQUMvQjs7QUFDQTtTQUFLLFlBQ0w7U0FBSyxXQUNMO1NBQUssaUJBQ0w7U0FBSyxTQUNMO1NBQUssT0FDTjtBQUVEOzs7O21DQUNFO1VBQUksS0FBSyxXQUFXLE1BQ2xCLE9BQU8sS0FBSyxVQUFVLEtBQUsscUJBRTNCLE9BQU8sSUFBSSxNQUNkO0FBRUQ7OztnQ0FBWSxZQUNWO1dBQUssZUFBZSxjQUNwQjtVQUFJLEtBQUssZUFBZSxnQkFBZ0IsWUFDdEM7YUFBSyxLQUFLLGNBQWMsS0FBSyxlQUM5QjtBQUZELGFBSUU7YUFBSyxLQUFLLGNBQWMsS0FBSyxlQUM5QjtBQUNGO0FBRUQ7Ozs7QUFDRTs7V0FBSyxpQkFDTDtpQkFBVyxZQUNQO2VBQ0g7QUFGRCxTQUVHLEtBQ0g7VUFBSSwyQkFBMkIsWUFDN0I7WUFBSSxNQUFLLG1CQUFtQixNQUFLLFVBQVUsUUFDekM7Y0FBSSxNQUFLLFVBQVUsTUFBSyxnQkFBZ0Isb0JBQW9CLElBQzFEO2tCQUFLLEtBQUssY0FBYyxNQUFLLGVBQzlCO0FBQ0Q7QUFDQTtnQkFBSyxTQUNMO0FBQ0Q7QUFQRCxlQVNFO2NBQUksTUFBSyxVQUFVLE1BQUssZ0JBQWdCLG9CQUFvQixJQUMxRDtrQkFBSyxLQUFLLGNBQWMsTUFBSyxlQUM5QjtBQUNEO2dCQUNEO0FBQ0Y7QUFma0IsU0FlaEIsS0FDSjtBQUdJOzs7Ozs7SUFDTDtxQkFBWSxVQUFVLFFBQVE7QUFDNUI7O1NBQUssV0FDTDtTQUFLLGFBQ0w7U0FBSyxTQUNMO1NBQUssUUFDTjtBQUVEOzs7O2tDQUNFO2FBQU8sS0FDUjtBQUVEOzs7b0NBQ0U7YUFBTyxLQUNSO0FBRUQ7OztnQ0FDRTthQUFPLEtBQ1I7QUFFRDs7OytCQUNFO2FBQU8sS0FDUjtBQUVEOzs7a0NBQWMsWUFDWjtXQUFLLGFBQ047QUFHSTs7Ozs7O0lBQ0w7Z0JBQVk7QUFDVjs7U0FBSyxPQUNMO1NBQUssUUFDTjtBQUVEOzs7O2tDQUFjLE9BQ1o7V0FBSyxTQUNOO0FBRUQ7OztrQ0FBYyxPQUNaO1dBQUssU0FDTjtBQUVEOzs7K0JBQ0U7YUFBTyxLQUNSO0FBaEJlIiwiZmlsZSI6IjEyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNsYXNzIEZsYXNoY2FyZERlcXVlIHtcbiAgY29uc3RydWN0b3IocXVlc3Rpb25zLCBpbnRlcnZhbCwgdXNlcikge1xuICAgIC8vcXVlc3Rpb25zIGlzIGFuIGFycmF5IG9mIEZsYXNoY2FyZCBvYmplY3RzXG4gICAgdGhpcy5xdWVzdGlvbnMgPSBxdWVzdGlvbnM7XG4gICAgdGhpcy5pbnRlcnZhbCA9IGludGVydmFsO1xuICAgIHRoaXMucXVlc3Rpb25OdW1iZXIgPSAwO1xuICAgIHRoaXMuc3RhdHVzID0gdHJ1ZTtcbiAgICB0aGlzLnVzZXIgPSB1c2VyO1xuICB9XG5cbiAgZ2V0Rmxhc2hjYXJkKCkge1xuICAgIGlmICh0aGlzLnN0YXR1cyA9PT0gdHJ1ZSkgXG4gICAgICByZXR1cm4gdGhpcy5xdWVzdGlvbnNbdGhpcy5xdWVzdGlvbk51bWJlcl07XG4gICAgZWxzZVxuICAgICAgcmV0dXJuIG5ldyBFcnJvcihcIkdhbWUgb3ZlclwiKTtcbiAgfVxuXG4gIGNoZWNrQW5zd2VyKHVzZXJBbnN3ZXIpIHtcbiAgICB0aGlzLmdldEZsYXNoY2FyZCgpLnNldFVzZXJBbnN3ZXIodXNlckFuc3dlcik7XG4gICAgaWYgKHRoaXMuZ2V0Rmxhc2hjYXJkKCkuZ2V0QW5zd2VyKCkgPT09IHVzZXJBbnN3ZXIpIHtcbiAgICAgIHRoaXMudXNlci5pbmNyZWFzZVBvaW50KHRoaXMuZ2V0Rmxhc2hjYXJkKCkuZ2V0UG9pbnQoKSk7IFxuICAgIH0gXG4gICAgZWxzZSB7XG4gICAgICB0aGlzLnVzZXIuZGVjcmVhc2VQb2ludCh0aGlzLmdldEZsYXNoY2FyZCgpLmdldFBvaW50KCkpO1xuICAgIH1cbiAgfVxuXG4gIHN0YXJ0Rmxhc2hjYXJkcygpIHtcbiAgICB0aGlzLnF1ZXN0aW9uTnVtYmVyID0gMDtcbiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkge1xuICAgICAgICByZXR1cm4gc3RhcnRJbnRldmFsO1xuICAgIH0sIHRoaXMuaW50ZXJ2YWwpO1xuICAgIGxldCBzdGFydEludGV2YWwgPSBzZXRJbnRlcnZhbCgoKSA9PiB7XG4gICAgICBpZiAodGhpcy5xdWVzdGlvbk51bWJlciA9PT0gdGhpcy5xdWVzdGlvbnMubGVuZ3RoKSB7XG4gICAgICAgIGlmICh0aGlzLnF1ZXN0aW9uc1t0aGlzLnF1ZXN0aW9uTnVtYmVyXS5nZXRVc2VyQW5zd2VyKCkgPT09IFwiXCIpIHtcbiAgICAgICAgICB0aGlzLnVzZXIuZGVjcmVhc2VQb2ludCh0aGlzLmdldEZsYXNoY2FyZCgpLmdldFBvaW50KCkpO1xuICAgICAgICB9XG4gICAgICAgIC8vaWYgY3VycmVudCBjYXJkIGlzIHRoZSBsYXN0IG9uZVxuICAgICAgICB0aGlzLnN0YXR1cyA9IGZhbHNlO1xuICAgICAgICBjbGVhckludGVydmFsKCk7ICAgIFxuICAgICAgfVxuICAgICAgZWxzZSB7XG4gICAgICAgIGlmICh0aGlzLnF1ZXN0aW9uc1t0aGlzLnF1ZXN0aW9uTnVtYmVyXS5nZXRVc2VyQW5zd2VyKCkgPT09IFwiXCIpIHtcbiAgICAgICAgICB0aGlzLnVzZXIuZGVjcmVhc2VQb2ludCh0aGlzLmdldEZsYXNoY2FyZCgpLmdldFBvaW50KCkpO1xuICAgICAgICB9XG4gICAgICAgIHRoaXMucXVlc3Rpb25OdW1iZXIrKztcbiAgICAgIH1cbiAgICB9LCB0aGlzLmludGVydmFsKTtcbiAgfVxufVxuXG5leHBvcnQgY2xhc3MgRmxhc2hjYXJkIHtcbiAgY29uc3RydWN0b3IocXVlc3Rpb24sIGFuc3dlciwgcG9pbnQpIHtcbiAgICB0aGlzLnF1ZXN0aW9uID0gcXVlc3Rpb247XG4gICAgdGhpcy51c2VyQW5zd2VyID0gXCJcIjtcbiAgICB0aGlzLmFuc3dlciA9IGFuc3dlcjtcbiAgICB0aGlzLnBvaW50ID0gcG9pbnQ7XG4gIH1cblxuICBnZXRRdWVzdGlvbigpIHtcbiAgICByZXR1cm4gdGhpcy5xdWVzdGlvbjtcbiAgfVxuXG4gIGdldFVzZXJBbnN3ZXIoKSB7XG4gICAgcmV0dXJuIHRoaXMudXNlckFuc3dlcjtcbiAgfVxuXG4gIGdldEFuc3dlcigpIHtcbiAgICByZXR1cm4gdGhpcy5hbnN3ZXI7XG4gIH1cblxuICBnZXRQb2ludCgpIHtcbiAgICByZXR1cm4gdGhpcy5wb2ludDtcbiAgfVxuXG4gIHNldFVzZXJBbnN3ZXIodXNlckFuc3dlcikge1xuICAgIHRoaXMudXNlckFuc3dlciA9IHVzZXJBbnN3ZXI7XG4gIH1cbn1cblxuZXhwb3J0IGNsYXNzIFVzZXIge1xuICBjb25zdHJ1Y3RvcihuYW1lKSB7XG4gICAgdGhpcy5uYW1lID0gbmFtZTtcbiAgICB0aGlzLnBvaW50ID0gMDtcbiAgfVxuICAgIFxuICBpbmNyZWFzZVBvaW50KHBvaW50KSB7XG4gICAgdGhpcy5wb2ludCArPSBwb2ludDtcbiAgfVxuICAgIFxuICBkZWNyZWFzZVBvaW50KHBvaW50KSB7XG4gICAgdGhpcy5wb2ludCAtPSBwb2ludDtcbiAgfVxuXG4gIGdldFBvaW50KCkge1xuICAgIHJldHVybiB0aGlzLnBvaW50O1xuICB9XG59Il0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///12\n')}});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Oct 15 2018 14:04:09 GMT-0700 (PDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
