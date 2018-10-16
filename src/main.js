@@ -30,12 +30,12 @@ $(document).ready(function() {
     flashcards.push(new Flashcard("Q8", "A8", 2));
     flashcards.push(new Flashcard("Q9", "A9", 2));
     flashcards.push(new Flashcard("Q10", "A10", 2));
-    deque = new FlashcardDeque(flashcards, 5000, user);
+    deque = new FlashcardDeque(flashcards, 2000, user);
 
-    $("#question-number").text(deque.questionNumber+1);
+    $("#question-number").text(deque.questionNumber);
     $("#question").text(deque.getFlashcard().getQuestion());
     $("#answer").text(deque.getFlashcard().getAnswer());
-    $("#point").text(user.getPoint());
+    $("#point").text(user.getUserPoint());
 
     deque.startFlashcards();
   });
@@ -50,7 +50,7 @@ $(document).ready(function() {
     } else {
       $("#check").text("WRONG!");
     }
-    
+
     $("#question").hide();
     $("#answer").show();
     $("#point").text(user.getPoint());

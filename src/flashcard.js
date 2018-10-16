@@ -5,67 +5,63 @@ export class FlashcardDeque {
     //questions is an array of Flashcard objects
     this.questions = questions;
     this.interval = interval;
-    this.questionNumber = 0;
+    this.questionNumber = 1;
     this.status = true;
     this.user = user;
   }
 
   getFlashcard() {
-    if (this.status === true) 
-      return this.questions[this.questionNumber];
-    else
-      return new Error("Game over");
+      return this.questions[this.questionNumber-1];
   }
 
   checkAnswer(userAnswer) {
     this.getFlashcard().setUserAnswer(userAnswer);
     if (this.getFlashcard().getAnswer() === this.getFlashcard().getUserAnswer()) {
-      this.user.increasePoint(this.getFlashcard().getPoint()); 
+      this.user.increasePoint(this.getFlashcard().getUserPoint());
       this.update();
-    } 
+    }
     else {
-      this.user.decreasePoint(this.getFlashcard().getPoint());
+      this.user.decreasePoint(this.getFlashcard().getUserPoint());
       this.update();
     }
   }
 
   startFlashcards() {
-    let currentTimeMS = Date.now();
-    this.questionNumber = 0;
-    setTimeout(function() {
-      return startInteval;
-    }, this.interval);
-    let startInteval = setInterval(() => {
-      let timeGap = Date.now() - currentTimeMS;
-      console.log(timeGap);
-      if (this.questionNumber === this.questions.length) {
-        // if (this.questions[this.questionNumber].getUserAnswer() === "") {
-        //   this.user.decreasePoint(this.getFlashcard().getPoint());
-        // }
-        //if current card is the last one
-        this.status = false;
-        clearInterval();    
-      }
-      else {
-        if (this.questions[this.questionNumber].getUserAnswer() === "") {
-          console.log(this.questions[this.questionNumber]);
-          console.log("user answer empty");
-          debugger;
-          this.user.decreasePoint(this.getFlashcard().getPoint());
+    let object = this;
+    object.questionNumber = 1;
+    let startQue = function () {
+      let queFunction = setInterval( () => {
+        if (this.questionNumber === this.questions.length) {
+          console.log("reached last check");
+          if (this.questions[this.questionNumber-1].getUserAnswer() === "") {
+            let lastFlash = this.getFlashcard();
+            console.log(lastFlash);
+            this.user.decreasePoint(lastFlash.getPoint());
+            $("#answer").text(lastFlash.getAnswer());
+            $("#point").text(this.user.getUserPoint());
+          }
+          clearInterval(queFunction);
+        }
+        else {
+          if (this.questions[this.questionNumber-1].getUserAnswer() === "") {
+            console.log(this.questions[this.questionNumber-1]);
+            console.log("user answer empty");
+            this.user.decreasePoint(this.getFlashcard().getPoint());
+          }
+          this.questionNumber++;
           this.update();
         }
-        debugger;
-        this.questionNumber++;
-      }
-      currentTimeMS = Date.now();
-    }, this.interval);
+      }, this.interval);
+      queFunction;
+    }
+    startQue.apply(object);
   }
 
   update () {
     $("#question").text(this.getFlashcard().getQuestion());
-    $("#question-number").text(this.questionNumber+1);
+    $("#question-number").text(this.questionNumber);
     $("#answer").text(this.getFlashcard().getAnswer());
-    $("#point").text(this.user.getPoint());
+    $("#point").text(this.user.getUserPoint());
   }
 }
 
@@ -103,18 +99,17 @@ export class User {
     this.name = name;
     this.point = 0;
   }
-    
+
   increasePoint(point) {
     this.point += point;
 
   }
-    
+
   decreasePoint(point) {
     this.point -= point;
   }
 
-  getPoint() {
+  getUserPoint() {
     return this.point;
   }
 }
-
